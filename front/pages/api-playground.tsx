@@ -1,11 +1,12 @@
 import createApolloClient from '@/apollo.client';
+import { Query } from '@/generated-types';
 import { gql } from '@apollo/client';
 
 export default function ApiPlayground() {
 
   const testHandle = async () => {
     const client = createApolloClient();
-    const { data } = await client.query({
+    const { data } = await client.query<Query>({
       query: gql`
         query Users {
           user(id: "1") {
