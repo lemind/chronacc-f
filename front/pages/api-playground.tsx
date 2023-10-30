@@ -11,13 +11,15 @@ export default function ApiPlayground() {
         query Users {
           user(id: "1") {
             id,
+            firstName,
+            lastName,
             creationDate
           }
         }
       `,
     });
 
-    console.log('test - user id', data.user.id);
+    console.log('FE - user', data.user);
     
   }
 

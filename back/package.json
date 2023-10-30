@@ -23,7 +23,7 @@
     "typeorm": "ts-node ./node_modules/typeorm/cli -d ./src/db/typeorm.config.ts",
     "migration:run": "yarn run typeorm migration:run",
     "migration:generate": "yarn run typeorm migration:generate ./src/db/migrations/sync",
-    "migration:create": "yarn run typeorm migration:create ./src/db/migrations/sync",
+    "migration:create": "ts-node ./node_modules/typeorm/cli migration:create ./src/db/migrations/sync",
     "migration:revert": "yarn run typeorm migration:revert"
   },
   "dependencies": {

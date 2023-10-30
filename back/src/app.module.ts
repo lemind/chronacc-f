@@ -4,9 +4,12 @@ import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UsersModule } from 'src/users/users.module';
+import { DbModule } from 'src/db/db.module';
+import { UsersService } from 'src/users/users.service';
 
 @Module({
   imports: [
+    DbModule,
     UsersModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -14,7 +17,7 @@ import { UsersModule } from 'src/users/users.module';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, UsersService],
 })
 
 export class AppModule {}

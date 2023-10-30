@@ -1,4 +1,4 @@
-import { UserEntity } from 'src/users/users.entity'
+import { UserEntity } from './../../src/users/users.entity'
 import { DataSource, DataSourceOptions } from "typeorm"
 
 export const DbEntities = [
