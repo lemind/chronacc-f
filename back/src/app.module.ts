@@ -6,6 +6,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UsersModule } from 'src/users/users.module';
 import { DbModule } from 'src/db/db.module';
 import { UsersService } from 'src/users/users.service';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { UsersService } from 'src/users/users.service';
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
     }),
+    TasksModule,
   ],
   controllers: [AppController],
   providers: [AppService, UsersService],

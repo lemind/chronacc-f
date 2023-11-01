@@ -21,7 +21,7 @@ export type Scalars = {
 
 export type Query = {
   __typename?: 'Query';
-  user: User;
+  user: UserEntity;
 };
 
 
@@ -30,8 +30,8 @@ export type QueryUserArgs = {
 };
 
 /** User */
-export type User = {
-  __typename?: 'User';
+export type UserEntity = {
+  __typename?: 'UserEntity';
   creationDate: Scalars['DateTime']['output'];
   firstName?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
@@ -114,7 +114,7 @@ export type ResolversTypes = {
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
-  User: ResolverTypeWrapper<User>;
+  UserEntity: ResolverTypeWrapper<UserEntity>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -124,7 +124,7 @@ export type ResolversParentTypes = {
   ID: Scalars['ID']['output'];
   Query: {};
   String: Scalars['String']['output'];
-  User: User;
+  UserEntity: UserEntity;
 };
 
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
@@ -132,10 +132,10 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 }
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
+  user?: Resolver<ResolversTypes['UserEntity'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
 };
 
-export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+export type UserEntityResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserEntity'] = ResolversParentTypes['UserEntity']> = {
   creationDate?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -146,6 +146,6 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 export type Resolvers<ContextType = any> = {
   DateTime?: GraphQLScalarType;
   Query?: QueryResolvers<ContextType>;
-  User?: UserResolvers<ContextType>;
+  UserEntity?: UserEntityResolvers<ContextType>;
 };
 
