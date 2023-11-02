@@ -1,5 +1,6 @@
+/* eslint-disable */
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
-import gql from 'graphql-tag';
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -68,12 +69,12 @@ export type TaskInput = {
 export type Timeframe = {
   __typename?: 'Timeframe';
   begin: Scalars['Float']['output'];
-  end: Scalars['Float']['output'];
+  end?: Maybe<Scalars['Float']['output']>;
 };
 
 export type TimeframeInput = {
   begin: Scalars['Float']['input'];
-  end: Scalars['Float']['input'];
+  end?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type UpdateTaskInputs = {
@@ -91,6 +92,29 @@ export type UserEntity = {
   lastName?: Maybe<Scalars['String']['output']>;
 };
 
+export type CreateTaskMutationVariables = Exact<{
+  taskData: CreateTaskInputs;
+}>;
+
+
+export type CreateTaskMutation = { __typename?: 'Mutation', createTask: { __typename?: 'TaskEntity', id: string, title: string, timeframes: Array<{ __typename?: 'Timeframe', begin: number, end?: number | null }> } };
+
+export type UpdateTaskMutationVariables = Exact<{
+  taskData: UpdateTaskInputs;
+}>;
+
+
+export type UpdateTaskMutation = { __typename?: 'Mutation', updateTask: { __typename?: 'TaskEntity', id: string, title: string, timeframes: Array<{ __typename?: 'Timeframe', begin: number, end?: number | null }> } };
+
+export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UsersQuery = { __typename?: 'Query', user: { __typename?: 'UserEntity', id: string, firstName?: string | null, lastName?: string | null, creationDate: any } };
+
+
+export const CreateTaskDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateTask"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"taskData"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateTaskInputs"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createTask"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"taskData"},"value":{"kind":"Variable","name":{"kind":"Name","value":"taskData"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"timeframes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Timeframe"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"begin"}},{"kind":"Field","name":{"kind":"Name","value":"end"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreateTaskMutation, CreateTaskMutationVariables>;
+export const UpdateTaskDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateTask"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"taskData"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateTaskInputs"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateTask"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"taskData"},"value":{"kind":"Variable","name":{"kind":"Name","value":"taskData"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"timeframes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Timeframe"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"begin"}},{"kind":"Field","name":{"kind":"Name","value":"end"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UpdateTaskMutation, UpdateTaskMutationVariables>;
+export const UsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Users"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"StringValue","value":"1","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"creationDate"}}]}}]}}]} as unknown as DocumentNode<UsersQuery, UsersQueryVariables>;
 
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -162,38 +186,38 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   CreateTaskInputs: CreateTaskInputs;
+  String: ResolverTypeWrapper<Scalars['String']['output']>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
-  Float: ResolverTypeWrapper<Scalars['Float']['output']>;
-  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
-  String: ResolverTypeWrapper<Scalars['String']['output']>;
   TaskEntity: ResolverTypeWrapper<TaskEntity>;
+  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   TaskInput: TaskInput;
   Timeframe: ResolverTypeWrapper<Timeframe>;
+  Float: ResolverTypeWrapper<Scalars['Float']['output']>;
   TimeframeInput: TimeframeInput;
   UpdateTaskInputs: UpdateTaskInputs;
   UserEntity: ResolverTypeWrapper<UserEntity>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Boolean: Scalars['Boolean']['output'];
   CreateTaskInputs: CreateTaskInputs;
+  String: Scalars['String']['output'];
   DateTime: Scalars['DateTime']['output'];
-  Float: Scalars['Float']['output'];
-  ID: Scalars['ID']['output'];
   Mutation: {};
   Query: {};
-  String: Scalars['String']['output'];
   TaskEntity: TaskEntity;
+  ID: Scalars['ID']['output'];
   TaskInput: TaskInput;
   Timeframe: Timeframe;
+  Float: Scalars['Float']['output'];
   TimeframeInput: TimeframeInput;
   UpdateTaskInputs: UpdateTaskInputs;
   UserEntity: UserEntity;
+  Boolean: Scalars['Boolean']['output'];
 };
 
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
@@ -218,7 +242,7 @@ export type TaskEntityResolvers<ContextType = any, ParentType extends ResolversP
 
 export type TimeframeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Timeframe'] = ResolversParentTypes['Timeframe']> = {
   begin?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  end?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  end?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

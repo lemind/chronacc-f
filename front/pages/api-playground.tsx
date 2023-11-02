@@ -1,29 +1,43 @@
+"use client"
+
 import createApolloClient from "@/apollo.client"
-import { Query } from "@/generated-types"
-import { gql } from "@apollo/client"
+import { ApolloProvider, gql, useLazyQuery } from "@apollo/client"
 
-export default function ApiPlayground() {
+const client = createApolloClient()
+
+const REQUEST_USER = gql`
+  query Users {
+    user(id: "1") {
+      id
+      firstName
+      lastName
+      creationDate
+    }
+  }
+`
+
+function UserFetch() {
+  const [fetchUser, { data }] = useLazyQuery(REQUEST_USER)
   const testHandle = async () => {
-    const client = createApolloClient()
-    const { data } = await client.query<Query>({
-      query: gql`
-        query Users {
-          user(id: "1") {
-            id
-            firstName
-            lastName
-            creationDate
-          }
-        }
-      `,
-    })
-
-    console.log("FE - user", data.user)
+    fetchUser()
+    console.log("FE - user", data)
   }
 
   return (
     <>
-      <button onClick={testHandle}>Test api</button>
+      <button onClick={testHandle}>Fetch user</button>
+      <br />
+      {data && <div>User: {JSON.stringify(data)}</div>}
+    </>
+  )
+}
+
+export default function ApiPlayground() {
+  return (
+    <>
+      <ApolloProvider client={client}>
+        <UserFetch />
+      </ApolloProvider>
     </>
   )
 }

@@ -7,6 +7,7 @@ import { UsersModule } from 'src/users/users.module';
 import { DbModule } from 'src/db/db.module';
 import { UsersService } from 'src/users/users.service';
 import { TasksModule } from './tasks/tasks.module';
+import { TasksService } from 'src/tasks/tasks.service';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { TasksModule } from './tasks/tasks.module';
     TasksModule,
   ],
   controllers: [AppController],
-  providers: [AppService, UsersService],
+  providers: [AppService, UsersService, TasksService],
 })
 
 export class AppModule {}
