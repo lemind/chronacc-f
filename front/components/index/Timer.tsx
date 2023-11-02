@@ -1,4 +1,5 @@
 import { gql } from "@/__generated__"
+import { TimerClock } from "@/components/index/TimerClock"
 import { useMutation } from "@apollo/client"
 import { PlayIcon, StopIcon } from "@heroicons/react/20/solid"
 import { FC, useState } from "react"
@@ -86,7 +87,7 @@ export const Timer: FC = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-row items-center gap-4">
       {!isActive && (
         <button
           className="btn btn-primary"
@@ -107,6 +108,12 @@ export const Timer: FC = () => {
         >
           <StopIcon className="text-black w-6 h-6" />
         </button>
+      )}
+
+      {createData.data && isActive && (
+        <TimerClock
+          begin={createData.data.createTask.timeframes.at(-1)?.begin}
+        />
       )}
     </div>
   )
