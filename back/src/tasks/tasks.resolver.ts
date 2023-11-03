@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver } from "@nestjs/graphql"
+import { Args, Mutation, Query, Resolver } from "@nestjs/graphql"
 import { CreateTaskDto, UpdateTaskDto } from "src/tasks/task.dto"
 import { TaskEntity } from "src/tasks/tasks.entity"
 import { TasksService } from "src/tasks/tasks.service"
@@ -15,5 +15,10 @@ export class TasksResolver {
   @Mutation((returns) => TaskEntity)
   async updateTask(@Args("taskData") taskData: UpdateTaskDto) {
     return this.tasksService.updateTask(taskData)
+  }
+
+  @Query((returns) => [TaskEntity])
+  async tasks(@Args("id") id: string) {
+    return this.tasksService.getTasksByUser(id)
   }
 }

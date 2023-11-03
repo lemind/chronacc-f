@@ -1,6 +1,13 @@
 import { Field, ID, InputType, ObjectType } from "@nestjs/graphql"
-// import JSON from "graphql-type-json"
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { UserEntity, UserId } from "src/users/users.entity"
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm"
 
 export type TimeframeOld = {
   begin: number
@@ -32,4 +39,12 @@ export class TaskEntity {
   @Field(() => [Timeframe])
   @Column({ type: "jsonb", default: [] })
   timeframes: Timeframe[]
+
+  @Field()
+  @CreateDateColumn()
+  creationDate: Date
+
+  @ManyToOne(() => UserEntity, (user) => user.tasks, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "createdById" })
+  createdBy: UserId
 }

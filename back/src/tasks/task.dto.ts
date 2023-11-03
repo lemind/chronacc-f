@@ -4,7 +4,11 @@ import { TaskEntity } from "src/tasks/tasks.entity"
 export type TaskId = string
 
 @InputType("CreateTaskInputs")
-export class CreateTaskDto extends OmitType(TaskEntity, ["id"], InputType) {}
+export class CreateTaskDto extends OmitType(
+  TaskEntity,
+  ["id", "creationDate"],
+  InputType,
+) {}
 
 @InputType("UpdateTaskInputs")
 export class UpdateTaskDto extends PartialType(TaskEntity, InputType) {}

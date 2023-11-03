@@ -1,6 +1,6 @@
+import { TaskEntity } from "src/tasks/tasks.entity"
+import { UserEntity } from "src/users/users.entity"
 import { DataSource, DataSourceOptions } from "typeorm"
-import { TaskEntity } from "./../../src/tasks/tasks.entity"
-import { UserEntity } from "./../../src/users/users.entity"
 
 export const DbEntities = [UserEntity, TaskEntity]
 const DbSubscribers = []

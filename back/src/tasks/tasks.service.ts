@@ -2,6 +2,9 @@ import { Inject, Injectable, NotFoundException } from "@nestjs/common"
 import { DbService } from "src/db/db.service"
 import { CreateTaskDto, TaskId, UpdateTaskDto } from "src/tasks/task.dto"
 import { TaskEntity } from "src/tasks/tasks.entity"
+import { UserId } from "src/users/users.entity"
+
+const SHOW_TASKS_LAST_DAYS_NUMBER = 7
 
 @Injectable()
 export class TasksService {
@@ -24,14 +27,27 @@ export class TasksService {
   }
 
   async createTask(taskData: CreateTaskDto): Promise<TaskEntity> {
-    return this.db.tasks.save(taskData)
+    const defaultUserId = "1"
+    return this.db.tasks.save({ ...taskData, createdBy: defaultUserId })
   }
 
   async updateTask(body: UpdateTaskDto): Promise<TaskEntity> {
     const task = await this.getTaskById(body.id)
 
-    const res = await this.db.tasks.save({ ...task, ...body })
+    await this.db.tasks.update(body.id, { ...task, ...body })
 
-    return res
+    return this.getTaskById(body.id)
+  }
+
+  async getTasksByUser(userId: UserId) {
+    const d = new Date()
+    d.setDate(d.getDate() - SHOW_TASKS_LAST_DAYS_NUMBER)
+
+    const tasks = await this.qbTask()
+      .where("t.createdBy = :userId", { userId: userId })
+      .andWhere("t.creationDate > :weekAgo", { weekAgo: d })
+      .getMany()
+
+    return tasks
   }
 }

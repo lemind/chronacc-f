@@ -2,19 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-"""User"""
-type UserEntity {
-  id: ID!
-  firstName: String
-  lastName: String
-  creationDate: DateTime!
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
 """Timeframe"""
 type Timeframe {
   begin: Float!
@@ -26,6 +13,20 @@ type TaskEntity {
   id: ID!
   title: String!
   timeframes: [Timeframe!]!
+  creationDate: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""User"""
+type UserEntity {
+  id: ID!
+  firstName: String
+  lastName: String
+  creationDate: DateTime!
 }
 
 input TimeframeInput {
@@ -37,10 +38,12 @@ input TaskInput {
   id: ID!
   title: String!
   timeframes: [TimeframeInput!]!
+  creationDate: DateTime!
 }
 
 type Query {
   user(id: String!): UserEntity!
+  tasks(id: String!): [TaskEntity!]!
 }
 
 type Mutation {
@@ -57,4 +60,5 @@ input UpdateTaskInputs {
   id: ID
   title: String
   timeframes: [TimeframeInput!]
+  creationDate: DateTime
 }

@@ -1,23 +1,24 @@
 "use client"
 
-import createApolloClient from "@/apollo.client"
-import { ApolloProvider, gql, useLazyQuery } from "@apollo/client"
+import { gql } from "@/__generated__"
+import { useLazyQuery } from "@apollo/client"
+import { FC } from "react"
 
-const client = createApolloClient()
-
-const REQUEST_USER = gql`
-  query Users {
-    user(id: "1") {
+const REQUEST_USER = gql(`
+  query Users($id: String!) {
+    user(id: $id) {
       id
       firstName
       lastName
       creationDate
     }
   }
-`
+`)
 
-function UserFetch() {
-  const [fetchUser, { data }] = useLazyQuery(REQUEST_USER)
+const UserFetch: FC = () => {
+  const [fetchUser, { data }] = useLazyQuery(REQUEST_USER, {
+    variables: { id: "1" },
+  })
   const testHandle = async () => {
     fetchUser()
     console.log("FE - user", data)
@@ -35,9 +36,7 @@ function UserFetch() {
 export default function ApiPlayground() {
   return (
     <>
-      <ApolloProvider client={client}>
-        <UserFetch />
-      </ApolloProvider>
+      <UserFetch />
     </>
   )
 }

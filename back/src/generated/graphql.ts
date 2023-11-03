@@ -68,12 +68,12 @@ export type TaskInput = {
 export type Timeframe = {
   __typename?: 'Timeframe';
   begin: Scalars['Float']['output'];
-  end: Scalars['Float']['output'];
+  end?: Maybe<Scalars['Float']['output']>;
 };
 
 export type TimeframeInput = {
   begin: Scalars['Float']['input'];
-  end: Scalars['Float']['input'];
+  end?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type UpdateTaskInputs = {
@@ -218,7 +218,7 @@ export type TaskEntityResolvers<ContextType = any, ParentType extends ResolversP
 
 export type TimeframeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Timeframe'] = ResolversParentTypes['Timeframe']> = {
   begin?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  end?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  end?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
