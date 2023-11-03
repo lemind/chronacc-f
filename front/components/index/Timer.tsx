@@ -1,8 +1,9 @@
 import { gql } from "@/__generated__"
 import { TimerClock } from "@/components/index/TimerClock"
+import { TimerInput } from "@/components/index/TimerInput"
 import { useMutation } from "@apollo/client"
 import { PlayIcon, StopIcon } from "@heroicons/react/20/solid"
-import { FC, useState } from "react"
+import { FC, useEffect, useState } from "react"
 
 const CREATE_TASK = gql(`
   mutation CreateTask($taskData: CreateTaskInputs!) {
@@ -38,6 +39,7 @@ export const Timer: FC = () => {
   const [createTaskReq, createData] = useMutation(CREATE_TASK)
   const [updateTaskReq, updateData] = useMutation(UPDATE_TASK)
   const [isActive, setIsActive] = useState(false)
+  const [title, setTitle] = useState("")
 
   const createTask = () => {
     const { data, loading, error } = createData
@@ -45,7 +47,7 @@ export const Timer: FC = () => {
     createTaskReq({
       variables: {
         taskData: {
-          title: "test title",
+          title: title,
           timeframes: [{ begin: new Date().getTime() }],
         },
       },
@@ -54,6 +56,8 @@ export const Timer: FC = () => {
 
   const updateTask = () => {
     setIsActive(false)
+    setTitle("")
+
     const { data, loading, error } = updateData
     const currTask = createData.data?.createTask
 
@@ -88,6 +92,12 @@ export const Timer: FC = () => {
 
   return (
     <div className="flex flex-row items-center gap-4">
+      <TimerInput
+        value={title}
+        onChange={(v) => {
+          setTitle(v)
+        }}
+      />
       {!isActive && (
         <button
           className="btn btn-primary"
