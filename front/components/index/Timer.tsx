@@ -56,7 +56,7 @@ export const Timer: FC = () => {
     if (createData.data?.createTask) {
       setCurrentTask(createData.data?.createTask)
     }
-  }, [createData])
+  }, [createData, setCurrentTask])
 
   const createTask = () => {
     const { data, loading, error } = createData

@@ -28,7 +28,7 @@ export const TasksList: FC = () => {
 
   useEffect(() => {
     res.refetch()
-  }, [currentTask])
+  }, [currentTask, res])
 
   console.log("d", res)
   if (res.data?.tasks.length === 0) return null

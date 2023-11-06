@@ -14,7 +14,7 @@ export const TimerClock: FC<Props> = ({ begin }) => {
 
       return () => clearInterval(intervalId)
     }, 1000)
-  }, [])
+  }, [begin])
 
   if (!begin) return null
 
