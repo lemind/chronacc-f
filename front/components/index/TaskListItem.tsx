@@ -4,6 +4,7 @@ import {
   UpdateTaskInputs,
 } from "@/__generated__/graphql"
 import { useCurrentTask } from "@/hooks/useCurrentTask"
+import { useTaskUpdate } from "@/hooks/useTaskUpdate"
 import { msToTime } from "@/utils/time"
 import { ArrayElement } from "@/utils/tshelpers"
 import { PlayIcon } from "@heroicons/react/20/solid"
@@ -16,6 +17,7 @@ type Props = {
 
 export const TasksListIten: FC<Props> = ({ task }) => {
   const { currentTask, setCurrentTask } = useCurrentTask()
+  const { updateTaskReq } = useTaskUpdate()
 
   const allTime = (timeArr: TaskItem["timeframes"]) => {
     const allTimeMs = timeArr.reduce((acc, i) => {
@@ -31,6 +33,39 @@ export const TasksListIten: FC<Props> = ({ task }) => {
   const time = useMemo(() => allTime(task.timeframes), [task])
 
   const rerunHandle = (task: UpdateTaskInputs) => {
+    if (currentTask) {
+      const currTask = currentTask
+
+      const frames = [...(currTask.timeframes || [])]
+
+      //todo: investigate cleanTypeName
+      const newFrames = frames.map((f) => {
+        if (!f.end) {
+          return {
+            begin: f.begin,
+            end: new Date().getTime(),
+          }
+        } else {
+          return {
+            begin: f.begin,
+            end: f.end,
+          }
+        }
+      })
+
+      const mergeData = {
+        id: currTask.id,
+        title: currTask.title,
+        timeframes: newFrames,
+      }
+
+      updateTaskReq({
+        variables: {
+          taskData: mergeData,
+        },
+      })
+    }
+
     const updated = {
       ...task,
       timeframes: [...(task.timeframes || []), { begin: new Date().getTime() }],

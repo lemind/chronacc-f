@@ -44,6 +44,11 @@ export const Timer: FC = () => {
   const { currentTask, setCurrentTask } = useCurrentTask()
 
   useEffect(() => {
+    setCurrentTask({ ...currentTask, title: title })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [title, setCurrentTask])
+
+  useEffect(() => {
     if (currentTask) {
       setIsActive(true)
       currentTask?.title && setTitle(currentTask?.title)
