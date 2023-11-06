@@ -1,4 +1,5 @@
 import { gql } from "@/__generated__"
+import { TasksListIten } from "@/components/index/TaskListItem"
 import { useQuery } from "@apollo/client"
 import { FC } from "react"
 
@@ -13,6 +14,7 @@ const REQUEST_TASKS = gql(`
           end
         }
       }
+      creationDate
     }
   }
 `)
@@ -29,12 +31,9 @@ export const TasksList: FC = () => {
     <div className="flex flex-col gap-8">
       <div className="text-xl">Tasks</div>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 w-[600px]">
         {res.data?.tasks.map((t) => (
-          <div className="flex flex-row gap-4">
-            <div>{t.id}</div>
-            <div>{t.title}</div>
-          </div>
+          <TasksListIten key={t.id} task={t} />
         ))}
       </div>
     </div>

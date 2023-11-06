@@ -1,6 +1,7 @@
 import { gql } from "@/__generated__"
 import { TimerClock } from "@/components/index/TimerClock"
 import { TimerInput } from "@/components/index/TimerInput"
+import { useCurrentTask } from "@/hooks/useCurrentTask"
 import { useMutation } from "@apollo/client"
 import { PlayIcon, StopIcon } from "@heroicons/react/20/solid"
 import { FC, useEffect, useState } from "react"
@@ -40,6 +41,23 @@ export const Timer: FC = () => {
   const [updateTaskReq, updateData] = useMutation(UPDATE_TASK)
   const [isActive, setIsActive] = useState(false)
   const [title, setTitle] = useState("")
+  const { currentTask, setCurrentTask } = useCurrentTask()
+
+  useEffect(() => {
+    console.log("1", currentTask)
+
+    if (currentTask) {
+      setIsActive(true)
+      currentTask?.title && setTitle(currentTask?.title)
+    }
+  }, [currentTask])
+
+  useEffect(() => {
+    console.log("2")
+    if (createData.data?.createTask) {
+      setCurrentTask(createData.data?.createTask)
+    }
+  }, [createData])
 
   const createTask = () => {
     const { data, loading, error } = createData
@@ -59,22 +77,25 @@ export const Timer: FC = () => {
     setTitle("")
 
     const { data, loading, error } = updateData
-    const currTask = createData.data?.createTask
+    const currTask = currentTask
 
     if (currTask) {
-      console.log("cc", currTask)
-
       const frames = [...(currTask.timeframes || [])]
-      const lastFrame = currTask.timeframes.at(-1)
-      if (lastFrame) {
-        lastFrame.end = new Date().getTime()
-      }
 
       //todo: investigate cleanTypeName
-      const newFrames = frames.map((f) => ({
-        begin: f.begin,
-        end: f.end,
-      }))
+      const newFrames = frames.map((f) => {
+        if (!f.end) {
+          return {
+            begin: f.begin,
+            end: new Date().getTime(),
+          }
+        } else {
+          return {
+            begin: f.begin,
+            end: f.end,
+          }
+        }
+      })
 
       const mergeData = {
         id: currTask.id,
@@ -120,9 +141,13 @@ export const Timer: FC = () => {
         </button>
       )}
 
-      {createData.data && isActive && (
+      {currentTask && isActive && currentTask.timeframes && (
         <TimerClock
-          begin={createData.data.createTask.timeframes.at(-1)?.begin}
+          begin={
+            currentTask &&
+            currentTask.timeframes &&
+            currentTask.timeframes.at(-1)?.begin
+          }
         />
       )}
     </div>

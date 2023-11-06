@@ -13,7 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  query Tasks($id: String!) {\n    tasks(id: $id) {\n      id\n      title\n      timeframes {\n        ... on Timeframe {\n          begin\n          end\n        }\n      }\n    }\n  }\n": types.TasksDocument,
+    "\n  query Tasks($id: String!) {\n    tasks(id: $id) {\n      id\n      title\n      timeframes {\n        ... on Timeframe {\n          begin\n          end\n        }\n      }\n      creationDate\n    }\n  }\n": types.TasksDocument,
     "\n  mutation CreateTask($taskData: CreateTaskInputs!) {\n    createTask(taskData: $taskData) {\n      id\n      title\n      timeframes {\n        ... on Timeframe {\n          begin\n          end\n        }\n      }\n    }\n  }\n": types.CreateTaskDocument,
     "\n  mutation UpdateTask($taskData: UpdateTaskInputs!) {\n    updateTask(taskData: $taskData) {\n      id\n      title\n      timeframes {\n        ... on Timeframe {\n          begin\n          end\n        }\n      }\n    }\n  }\n": types.UpdateTaskDocument,
     "\n  query Users($id: String!) {\n    user(id: $id) {\n      id\n      firstName\n      lastName\n      creationDate\n    }\n  }\n": types.UsersDocument,
@@ -36,7 +36,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query Tasks($id: String!) {\n    tasks(id: $id) {\n      id\n      title\n      timeframes {\n        ... on Timeframe {\n          begin\n          end\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query Tasks($id: String!) {\n    tasks(id: $id) {\n      id\n      title\n      timeframes {\n        ... on Timeframe {\n          begin\n          end\n        }\n      }\n    }\n  }\n"];
+export function gql(source: "\n  query Tasks($id: String!) {\n    tasks(id: $id) {\n      id\n      title\n      timeframes {\n        ... on Timeframe {\n          begin\n          end\n        }\n      }\n      creationDate\n    }\n  }\n"): (typeof documents)["\n  query Tasks($id: String!) {\n    tasks(id: $id) {\n      id\n      title\n      timeframes {\n        ... on Timeframe {\n          begin\n          end\n        }\n      }\n      creationDate\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

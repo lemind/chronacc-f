@@ -6,7 +6,7 @@ export type TaskId = string
 @InputType("CreateTaskInputs")
 export class CreateTaskDto extends OmitType(
   TaskEntity,
-  ["id", "creationDate"],
+  ["id", "creationDate", "createdBy"],
   InputType,
 ) {}
 
