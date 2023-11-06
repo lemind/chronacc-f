@@ -44,16 +44,15 @@ export const Timer: FC = () => {
   const { currentTask, setCurrentTask } = useCurrentTask()
 
   useEffect(() => {
-    console.log("1", currentTask)
-
     if (currentTask) {
       setIsActive(true)
       currentTask?.title && setTitle(currentTask?.title)
+    } else {
+      setIsActive(false)
     }
   }, [currentTask])
 
   useEffect(() => {
-    console.log("2")
     if (createData.data?.createTask) {
       setCurrentTask(createData.data?.createTask)
     }
@@ -99,7 +98,7 @@ export const Timer: FC = () => {
 
       const mergeData = {
         id: currTask.id,
-        title: currTask.title,
+        title: title,
         timeframes: newFrames,
       }
 
@@ -108,6 +107,8 @@ export const Timer: FC = () => {
           taskData: mergeData,
         },
       })
+
+      setCurrentTask(null)
     }
   }
 

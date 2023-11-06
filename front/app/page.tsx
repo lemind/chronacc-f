@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <ApolloProvider client={client}>
       <RecoilRoot>
-        <main className="flex min-h-screen flex-col items-center justify-between p-8">
+        <main className="flex min-h-screen flex-col items-center justify-start p-8">
           <div className="z-10 max-w-5xl w-full items-center justify-between font-mono lg:flex">
             <h1>Chronacc F</h1>
           </div>
@@ -21,8 +21,8 @@ export default function Home() {
             <TasksList />
           </div>
 
-          <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-            Follow your track
+          <div className="absolute bottom-2 mb-6 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
+            Log your effort
           </div>
         </main>
       </RecoilRoot>

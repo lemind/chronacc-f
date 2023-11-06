@@ -46,6 +46,7 @@ export class TasksService {
     const tasks = await this.qbTask()
       .where("t.createdBy = :userId", { userId: userId })
       .andWhere("t.creationDate > :weekAgo", { weekAgo: d })
+      .orderBy('t.id', 'DESC')
       .getMany()
 
     return tasks
