@@ -28,11 +28,10 @@ export const TasksList: FC = () => {
 
   useEffect(() => {
     res.refetch()
-  }, [currentTask?.id, res])
+  }, [currentTask?.id])
 
-  console.log("d", res)
   if (res.data?.tasks.length === 0) return null
-  res.refetch
+
   return (
     <div className="flex flex-col gap-8">
       <div className="text-xl">Tasks</div>

@@ -2,9 +2,10 @@ import { gql } from "@/__generated__"
 import { TimerClock } from "@/components/index/TimerClock"
 import { TimerInput } from "@/components/index/TimerInput"
 import { useCurrentTask } from "@/hooks/useCurrentTask"
+import { useTaskUpdate } from "@/hooks/useTaskUpdate"
 import { useMutation } from "@apollo/client"
 import { PlayIcon, StopIcon } from "@heroicons/react/20/solid"
-import { FC, useEffect, useState } from "react"
+import { FC, useCallback, useEffect, useMemo, useState } from "react"
 
 const CREATE_TASK = gql(`
   mutation CreateTask($taskData: CreateTaskInputs!) {
@@ -21,32 +22,19 @@ const CREATE_TASK = gql(`
   }
 `)
 
-const UPDATE_TASK = gql(`
-  mutation UpdateTask($taskData: UpdateTaskInputs!) {
-    updateTask(taskData: $taskData) {
-      id
-      title
-      timeframes {
-        ... on Timeframe {
-          begin
-          end
-        }
-      }
-    }
-  }
-`)
-
 export const Timer: FC = () => {
   const [createTaskReq, createData] = useMutation(CREATE_TASK)
-  const [updateTaskReq, updateData] = useMutation(UPDATE_TASK)
+  const { updateTaskReq, updateData } = useTaskUpdate()
   const [isActive, setIsActive] = useState(false)
   const [title, setTitle] = useState("")
   const { currentTask, setCurrentTask } = useCurrentTask()
 
   useEffect(() => {
-    setCurrentTask({ ...currentTask, title: title })
+    if (currentTask) {
+      setCurrentTask({ ...currentTask, title: title })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title, setCurrentTask])
+  }, [title])
 
   useEffect(() => {
     if (currentTask) {
@@ -61,7 +49,7 @@ export const Timer: FC = () => {
     if (createData.data?.createTask) {
       setCurrentTask(createData.data?.createTask)
     }
-  }, [createData, setCurrentTask])
+  }, [createData.data?.createTask, setCurrentTask])
 
   const createTask = () => {
     const { data, loading, error } = createData
@@ -77,9 +65,6 @@ export const Timer: FC = () => {
   }
 
   const updateTask = () => {
-    setIsActive(false)
-    setTitle("")
-
     const { data, loading, error } = updateData
     const currTask = currentTask
 
@@ -114,6 +99,7 @@ export const Timer: FC = () => {
       })
 
       setCurrentTask(null)
+      setTitle("")
     }
   }
 

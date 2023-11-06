@@ -17,7 +17,7 @@ const UPDATE_TASK = gql(`
 `)
 
 export const useTaskUpdate = () => {
-  const [updateTaskReq] = useMutation(UPDATE_TASK)
+  const [updateTaskReq, updateData] = useMutation(UPDATE_TASK)
 
-  return { updateTaskReq }
+  return { updateTaskReq, updateData }
 }
