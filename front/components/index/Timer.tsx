@@ -1,27 +1,10 @@
-import { gql } from "@/__generated__"
 import { TimerClock } from "@/components/index/TimerClock"
 import { TimerInput } from "@/components/index/TimerInput"
 import { useTaskCreate } from "@/hooks/useCreateTask"
 import { useCurrentTask } from "@/hooks/useCurrentTask"
 import { useTaskUpdate } from "@/hooks/useTaskUpdate"
-import { useMutation } from "@apollo/client"
 import { PlayIcon, StopIcon } from "@heroicons/react/20/solid"
-import { FC, useCallback, useEffect, useMemo, useState } from "react"
-
-const CREATE_TASK = gql(`
-  mutation CreateTask($taskData: CreateTaskInputs!) {
-    createTask(taskData: $taskData) {
-      id
-      title
-      timeframes {
-        ... on Timeframe {
-          begin
-          end
-        }
-      }
-    }
-  }
-`)
+import { FC, useEffect, useState } from "react"
 
 export const Timer: FC = () => {
   const { createTask, createData } = useTaskCreate()
@@ -53,12 +36,16 @@ export const Timer: FC = () => {
   }, [createData.data?.createTask, setCurrentTask])
 
   const createTaskHandle = () => {
+    // todo: loaders
+    // eslint-disable-next-line unused-imports/no-unused-vars
     const { data, loading, error } = createData
     setIsActive(true)
     createTask()
   }
 
   const updateTaskHadnle = () => {
+    // todo: loaders
+    // eslint-disable-next-line unused-imports/no-unused-vars
     const { data, loading, error } = updateData
     const currTask = currentTask
 

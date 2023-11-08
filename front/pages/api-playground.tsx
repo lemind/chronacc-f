@@ -1,4 +1,5 @@
 "use client"
+/* eslint-disable no-console */
 
 import { gql } from "@/__generated__"
 import { useLazyQuery } from "@apollo/client"

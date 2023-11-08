@@ -1,8 +1,4 @@
-import {
-  TaskEntity,
-  TasksQuery,
-  UpdateTaskInputs,
-} from "@/__generated__/graphql"
+import { TasksQuery, UpdateTaskInputs } from "@/__generated__/graphql"
 import { useTaskCreate } from "@/hooks/useCreateTask"
 import { useCurrentTask } from "@/hooks/useCurrentTask"
 import { useTaskUpdate } from "@/hooks/useTaskUpdate"
@@ -44,7 +40,7 @@ export const TasksListIten: FC<Props> = ({ task }) => {
     if (currentTask) {
       const currTask = currentTask
 
-      const frames = [...(currTask.timeframes || [])]
+      const frames = [...(currTask.timeframes ?? [])]
 
       //todo: investigate cleanTypeName
       const newFrames = frames.map((f) => {
@@ -74,14 +70,14 @@ export const TasksListIten: FC<Props> = ({ task }) => {
       const updated = {
         ...task,
         timeframes: [
-          ...(task.timeframes || []),
+          ...(task.timeframes ?? []),
           { begin: new Date().getTime() },
         ],
       }
       updateTask(updated)
       setCurrentTask(updated)
     } else {
-      createTask(task.title || "")
+      createTask(task.title ?? "")
     }
   }
 

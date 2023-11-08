@@ -1,10 +1,9 @@
 import { UpdateTaskInputs } from "@/__generated__/graphql"
-import { useState } from "react"
 import { atom, useRecoilState } from "recoil"
 
 const currentTaskState = atom<UpdateTaskInputs | null>({
-  key: "currentTaskState", // unique ID (with respect to other atoms/selectors)
-  default: null, // default value (aka initial value)
+  key: "currentTaskState",
+  default: null,
 })
 
 export const useCurrentTask = () => {

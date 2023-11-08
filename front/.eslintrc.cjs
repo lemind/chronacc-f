@@ -1,0 +1,33 @@
+module.exports = {
+  env: { browser: true, es2021: true },
+  plugins: ["react", "@typescript-eslint", "jsx-a11y", "unused-imports"],
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaVersion: "latest",
+    sourceType: "module",
+    tsconfigRootDir: __dirname,
+    project: ["./tsconfig.json"],
+  },
+  extends: [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "next/core-web-vitals",
+  ],
+  ignorePatterns: [".eslintrc.cjs", "postcss.config.js"],
+  rules: {
+    "unused-imports/no-unused-imports": "warn",
+    "unused-imports/no-unused-vars": "warn",
+    "no-console": "warn",
+    "@typescript-eslint/comma-dangle": "off",
+    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/object-curly-spacing": "off",
+    "@typescript-eslint/prefer-nullish-coalescing": "error",
+    "@typescript-eslint/quotes": "off",
+    "@typescript-eslint/semi": "off",
+    "jsx-a11y/alt-text": "warn",
+    "react/react-in-jsx-scope": "off",
+  },
+}
