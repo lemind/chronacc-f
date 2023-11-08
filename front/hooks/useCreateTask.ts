@@ -1,5 +1,4 @@
 import { gql } from "@/__generated__"
-import { CreateTaskInputs } from "@/__generated__/graphql"
 import { useMutation } from "@apollo/client"
 
 const CREATE_TASK = gql(`
@@ -24,7 +23,7 @@ export const useTaskCreate = () => {
     createTaskReq({
       variables: {
         taskData: {
-          title: title || "",
+          title: title ?? "",
           timeframes: [{ begin: new Date().getTime() }],
         },
       },
