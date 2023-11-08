@@ -18,3 +18,23 @@ export function msToTime(duration: number): TimeObj {
     s: secondsStr,
   }
 }
+
+export const isSameDay = (
+  targetTimestamp: number,
+  newTimestamp: number,
+): boolean => {
+  const target = new Date(targetTimestamp)
+  const formattedTarget = target.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })
+  const newDate = new Date(newTimestamp)
+  const formattedNewDate = newDate.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })
+
+  return formattedTarget === formattedNewDate
+}

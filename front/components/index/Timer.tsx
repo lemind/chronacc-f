@@ -1,6 +1,7 @@
 import { gql } from "@/__generated__"
 import { TimerClock } from "@/components/index/TimerClock"
 import { TimerInput } from "@/components/index/TimerInput"
+import { useTaskCreate } from "@/hooks/useCreateTask"
 import { useCurrentTask } from "@/hooks/useCurrentTask"
 import { useTaskUpdate } from "@/hooks/useTaskUpdate"
 import { useMutation } from "@apollo/client"
@@ -23,8 +24,8 @@ const CREATE_TASK = gql(`
 `)
 
 export const Timer: FC = () => {
-  const [createTaskReq, createData] = useMutation(CREATE_TASK)
-  const { updateTaskReq, updateData } = useTaskUpdate()
+  const { createTask, createData } = useTaskCreate()
+  const { updateTask, updateData } = useTaskUpdate()
   const [isActive, setIsActive] = useState(false)
   const [title, setTitle] = useState("")
   const { currentTask, setCurrentTask } = useCurrentTask()
@@ -51,53 +52,18 @@ export const Timer: FC = () => {
     }
   }, [createData.data?.createTask, setCurrentTask])
 
-  const createTask = () => {
+  const createTaskHandle = () => {
     const { data, loading, error } = createData
     setIsActive(true)
-    createTaskReq({
-      variables: {
-        taskData: {
-          title: title,
-          timeframes: [{ begin: new Date().getTime() }],
-        },
-      },
-    })
+    createTask()
   }
 
-  const updateTask = () => {
+  const updateTaskHadnle = () => {
     const { data, loading, error } = updateData
     const currTask = currentTask
 
     if (currTask) {
-      const frames = [...(currTask.timeframes || [])]
-
-      //todo: investigate cleanTypeName
-      const newFrames = frames.map((f) => {
-        if (!f.end) {
-          return {
-            begin: f.begin,
-            end: new Date().getTime(),
-          }
-        } else {
-          return {
-            begin: f.begin,
-            end: f.end,
-          }
-        }
-      })
-
-      const mergeData = {
-        id: currTask.id,
-        title: title,
-        timeframes: newFrames,
-      }
-
-      updateTaskReq({
-        variables: {
-          taskData: mergeData,
-        },
-      })
-
+      updateTask(currentTask, title)
       setCurrentTask(null)
       setTitle("")
     }
@@ -115,7 +81,7 @@ export const Timer: FC = () => {
         <button
           className="btn btn-primary"
           onClick={() => {
-            createTask()
+            createTaskHandle()
           }}
         >
           <PlayIcon className="text-black w-6 h-6" />
@@ -126,7 +92,7 @@ export const Timer: FC = () => {
         <button
           className="btn btn-primary"
           onClick={() => {
-            updateTask()
+            updateTaskHadnle()
           }}
         >
           <StopIcon className="text-black w-6 h-6" />

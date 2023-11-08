@@ -3,12 +3,13 @@ import {
   TasksQuery,
   UpdateTaskInputs,
 } from "@/__generated__/graphql"
+import { useTaskCreate } from "@/hooks/useCreateTask"
 import { useCurrentTask } from "@/hooks/useCurrentTask"
 import { useTaskUpdate } from "@/hooks/useTaskUpdate"
-import { msToTime } from "@/utils/time"
+import { isSameDay, msToTime } from "@/utils/time"
 import { ArrayElement } from "@/utils/tshelpers"
 import { PlayIcon } from "@heroicons/react/20/solid"
-import { FC, useMemo } from "react"
+import { FC, useEffect, useMemo } from "react"
 
 type TaskItem = ArrayElement<TasksQuery["tasks"]>
 type Props = {
@@ -17,7 +18,14 @@ type Props = {
 
 export const TasksListIten: FC<Props> = ({ task }) => {
   const { currentTask, setCurrentTask } = useCurrentTask()
-  const { updateTaskReq } = useTaskUpdate()
+  const { updateTask } = useTaskUpdate()
+  const { createTask, createData } = useTaskCreate()
+
+  useEffect(() => {
+    if (createData.data?.createTask) {
+      setCurrentTask(createData.data?.createTask)
+    }
+  }, [createData.data?.createTask, setCurrentTask])
 
   const allTime = (timeArr: TaskItem["timeframes"]) => {
     const allTimeMs = timeArr.reduce((acc, i) => {
@@ -59,18 +67,22 @@ export const TasksListIten: FC<Props> = ({ task }) => {
         timeframes: newFrames,
       }
 
-      updateTaskReq({
-        variables: {
-          taskData: mergeData,
-        },
-      })
+      updateTask(mergeData)
     }
 
-    const updated = {
-      ...task,
-      timeframes: [...(task.timeframes || []), { begin: new Date().getTime() }],
+    if (isSameDay(task.timeframes![0].begin, new Date().getTime())) {
+      const updated = {
+        ...task,
+        timeframes: [
+          ...(task.timeframes || []),
+          { begin: new Date().getTime() },
+        ],
+      }
+      updateTask(updated)
+      setCurrentTask(updated)
+    } else {
+      createTask(task.title || "")
     }
-    setCurrentTask(updated)
   }
 
   return (
