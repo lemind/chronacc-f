@@ -42,7 +42,13 @@ export type MutationUpdateTaskArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  tasks: Array<TaskEntity>;
   user: UserEntity;
+};
+
+
+export type QueryTasksArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -53,12 +59,16 @@ export type QueryUserArgs = {
 /** Task */
 export type TaskEntity = {
   __typename?: 'TaskEntity';
+  createdBy: Scalars['String']['output'];
+  creationDate: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   timeframes: Array<Timeframe>;
   title: Scalars['String']['output'];
 };
 
 export type TaskInput = {
+  createdBy: Scalars['String']['input'];
+  creationDate: Scalars['DateTime']['input'];
   id: Scalars['ID']['input'];
   timeframes: Array<TimeframeInput>;
   title: Scalars['String']['input'];
@@ -77,6 +87,8 @@ export type TimeframeInput = {
 };
 
 export type UpdateTaskInputs = {
+  createdBy?: InputMaybe<Scalars['String']['input']>;
+  creationDate?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   timeframes?: InputMaybe<Array<TimeframeInput>>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -89,6 +101,7 @@ export type UserEntity = {
   firstName?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   lastName?: Maybe<Scalars['String']['output']>;
+  tasks: Array<TaskEntity>;
 };
 
 
@@ -206,10 +219,13 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  tasks?: Resolver<Array<ResolversTypes['TaskEntity']>, ParentType, ContextType, RequireFields<QueryTasksArgs, 'id'>>;
   user?: Resolver<ResolversTypes['UserEntity'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
 };
 
 export type TaskEntityResolvers<ContextType = any, ParentType extends ResolversParentTypes['TaskEntity'] = ResolversParentTypes['TaskEntity']> = {
+  createdBy?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  creationDate?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   timeframes?: Resolver<Array<ResolversTypes['Timeframe']>, ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -227,6 +243,7 @@ export type UserEntityResolvers<ContextType = any, ParentType extends ResolversP
   firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  tasks?: Resolver<Array<ResolversTypes['TaskEntity']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

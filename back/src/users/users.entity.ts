@@ -23,7 +23,7 @@ export class UserEntity {
   @CreateDateColumn()
   creationDate: Date;
 
-  @OneToMany(() => TaskEntity, (task) => task.id, { eager: true, cascade: true })
+  @OneToMany(() => TaskEntity, (task) => task.id, { cascade: true })
   @JoinColumn({ name: "id" })
   tasks: TaskEntity[]
 }

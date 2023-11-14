@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, ModuleMetadata } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -9,7 +9,7 @@ import { UsersService } from 'src/users/users.service';
 import { TasksModule } from './tasks/tasks.module';
 import { TasksService } from 'src/tasks/tasks.service';
 
-@Module({
+export const appModuleMeta: ModuleMetadata = {
   imports: [
     DbModule,
     UsersModule,
@@ -21,6 +21,8 @@ import { TasksService } from 'src/tasks/tasks.service';
   ],
   controllers: [AppController],
   providers: [AppService, UsersService, TasksService],
-})
+}
+
+@Module(appModuleMeta)
 
 export class AppModule {}

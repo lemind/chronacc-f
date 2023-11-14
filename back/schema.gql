@@ -14,7 +14,6 @@ type TaskEntity {
   title: String!
   timeframes: [Timeframe!]!
   creationDate: DateTime!
-  createdBy: String!
 }
 
 """
@@ -28,7 +27,6 @@ type UserEntity {
   firstName: String
   lastName: String
   creationDate: DateTime!
-  tasks: [TaskEntity!]!
 }
 
 input TimeframeInput {
@@ -41,7 +39,6 @@ input TaskInput {
   title: String!
   timeframes: [TimeframeInput!]!
   creationDate: DateTime!
-  createdBy: String!
 }
 
 type Query {
@@ -64,5 +61,4 @@ input UpdateTaskInputs {
   title: String
   timeframes: [TimeframeInput!]
   creationDate: DateTime
-  createdBy: String
 }

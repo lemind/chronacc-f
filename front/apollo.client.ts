@@ -17,7 +17,7 @@ const cleanTypeName = new ApolloLink((operation, forward) => {
 
 const createApolloClient = () => {
   return new ApolloClient({
-    uri: "/api/v1",
+    uri: "/api",
     // link: ApolloLink.from([cleanTypeName]),
     cache: new InMemoryCache(),
   })

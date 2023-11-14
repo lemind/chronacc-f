@@ -2,7 +2,8 @@
 /* eslint-disable no-console */
 
 import { gql } from "@/__generated__"
-import { useLazyQuery } from "@apollo/client"
+import createApolloClient from "@/apollo.client"
+import { ApolloProvider, useLazyQuery } from "@apollo/client"
 import { FC } from "react"
 
 const REQUEST_USER = gql(`
@@ -34,10 +35,14 @@ const UserFetch: FC = () => {
   )
 }
 
+const client = createApolloClient()
+
 export default function ApiPlayground() {
   return (
     <>
-      <UserFetch />
+      <ApolloProvider client={client}>
+        <UserFetch />
+      </ApolloProvider>
     </>
   )
 }

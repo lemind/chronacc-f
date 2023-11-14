@@ -1,0 +1,4 @@
+CREATE USER chronacc WITH PASSWORD 'chronacc';
+CREATE DATABASE chronacc;
+GRANT ALL PRIVILEGES ON DATABASE chronacc TO chronacc;
+ALTER DATABASE chronacc OWNER TO chronacc;
