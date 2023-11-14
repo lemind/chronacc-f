@@ -1,7 +1,7 @@
 import { Global, Module } from "@nestjs/common"
 import { TypeOrmModule } from "@nestjs/typeorm"
 import { DBConfig, DbEntities } from "./typeorm.config"
-import { DbService } from 'src/db/db.service'
+import { DbService } from "src/db/db.service"
 
 @Global()
 @Module({

@@ -1,7 +1,7 @@
 import { TaskEntity } from "src/tasks/tasks.entity"
 import { UserEntity } from "src/users/users.entity"
 import { DataSource, DataSourceOptions } from "typeorm"
-require('dotenv-flow').config();
+require("dotenv-flow").config()
 
 export const DbEntities = [UserEntity, TaskEntity]
 const DbSubscribers = []
