@@ -1,4 +1,4 @@
-import { AppContext } from 'test/common'
+import { AppContext } from 'test/helpers/common'
 
 export const TasksBasic = (ctx: AppContext) => () => {
   beforeAll(async () => {

@@ -4,7 +4,7 @@ import { Server } from 'http'
 import { appModuleMeta } from 'src/app.module'
 import { DbService } from 'src/db/db.service'
 import { setup } from 'src/setup'
-import { HttpClient } from 'test/http.client'
+import { HttpClient } from 'test/helpers/http.client'
 import { ObjectLiteral, Repository } from 'typeorm'
 
 const createApp = async () => {

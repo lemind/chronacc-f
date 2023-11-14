@@ -1,5 +1,5 @@
-import { AppContext } from 'test/common';
-import { TasksBasic } from 'test/tasks/basic.spec';
+import { AppContext } from 'test/helpers/common';
+import { TasksBasic } from 'test/tasks/basic.test';
 
 describe('App (e2e)', () => {
   const ctx = new AppContext()
