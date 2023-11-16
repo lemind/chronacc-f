@@ -21,6 +21,7 @@ export const TimerClock: FC<Props> = ({ begin }) => {
 
       setCurrInterval(intervalId)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [begin])
 
   if (!begin) return null
