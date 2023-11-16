@@ -6,14 +6,21 @@ type Props = {
 }
 export const TimerClock: FC<Props> = ({ begin }) => {
   const [time, setTime] = useState<TimeObj>({ h: "", m: "", s: "" })
+  const [currInterval, setCurrInterval] = useState<NodeJS.Timeout | undefined>()
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      const diff = new Date().getTime() - begin
-      setTime(msToTime(diff))
+    clearInterval(currInterval)
 
-      return () => clearInterval(intervalId)
-    }, 1000)
+    if (begin) {
+      const intervalId = setInterval(() => {
+        const diff = new Date().getTime() - begin
+        setTime(msToTime(diff))
+
+        return () => clearInterval(intervalId)
+      }, 1000)
+
+      setCurrInterval(intervalId)
+    }
   }, [begin])
 
   if (!begin) return null

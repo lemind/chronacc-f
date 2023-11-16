@@ -19,9 +19,9 @@ export default function Home() {
           <Suspense fallback={<LoadingFallback />}>
             <main className="flex min-h-screen flex-col items-center justify-start p-8">
               <div className="z-10 max-w-5xl w-full items-center justify-between font-mono lg:flex">
-                <h1>Chronacc F</h1>
+                <h1 className="text-lg font-bold mb-6">Chronacc F</h1>
               </div>
-              <div className="flex flex-col gap-8 w-full max-w-5xl min-h-[600px]">
+              <div className="flex flex-col gap-8 w-full max-w-5xl min-h-[80vh]">
                 <Timer />
                 <TasksList />
               </div>
