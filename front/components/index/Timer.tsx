@@ -1,3 +1,4 @@
+import { Loader } from "@/components/common/Loader"
 import { TimerClock } from "@/components/index/TimerClock"
 import { TimerInput } from "@/components/index/TimerInput"
 import { useTaskCreate } from "@/hooks/useCreateTask"
@@ -36,17 +37,11 @@ export const Timer: FC = () => {
   }, [createData.data?.createTask, setCurrentTask])
 
   const createTaskHandle = () => {
-    // todo: loaders
-    // eslint-disable-next-line unused-imports/no-unused-vars
-    const { data, loading, error } = createData
     setIsActive(true)
     createTask()
   }
 
   const updateTaskHadnle = () => {
-    // todo: loaders
-    // eslint-disable-next-line unused-imports/no-unused-vars
-    const { data, loading, error } = updateData
     const currTask = currentTask
 
     if (currTask) {
@@ -65,25 +60,33 @@ export const Timer: FC = () => {
         }}
       />
       {!isActive && (
-        <button
-          className="btn btn-primary"
-          onClick={() => {
-            createTaskHandle()
-          }}
-        >
-          <PlayIcon className="text-black w-6 h-6" />
-        </button>
+        <>
+          <button
+            className="btn btn-primary"
+            onClick={() => {
+              createTaskHandle()
+            }}
+            disabled={createData.loading}
+          >
+            <PlayIcon className="text-black w-6 h-6" />
+          </button>
+          {createData.loading && <Loader />}
+        </>
       )}
 
       {isActive && (
-        <button
-          className="btn btn-primary"
-          onClick={() => {
-            updateTaskHadnle()
-          }}
-        >
-          <StopIcon className="text-black w-6 h-6" />
-        </button>
+        <>
+          <button
+            className="btn btn-primary"
+            onClick={() => {
+              updateTaskHadnle()
+            }}
+            disabled={updateData.loading}
+          >
+            <StopIcon className="text-black w-6 h-6" />
+          </button>
+          {updateData.loading && <Loader />}
+        </>
       )}
 
       {currentTask && isActive && currentTask.timeframes && (
